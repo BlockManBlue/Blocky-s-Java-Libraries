@@ -1,0 +1,101 @@
+In order to use any of these libraries in your project,
+simply copy the file into wherever your other java files are,
+such as the "src" file
+
+itch.io page: blockmanblue.itch.io/blockys-java-libraries
+github page: github.com/BlockManBlue/Blocky-s-Java-Libraries
+
+***
+>AUDIO.JAVA<
+-Use to play sounds in a program
+>main(String FileName): play song from FileName file
+***
+
+***
+>BTOOLS.JAVA<
+-Varied collection of tools
+>getDistance(Point p1, Point p2): get the distance from p1 and p2
+>getDirection(Point p1, Point p2): get the direction p2 is from p1, in the vector format
+>randInt(int min, int max): get a random integer between min and max
+>randDouble(double min, double max): get a random decible number between min and max, DO NOT USE IN MASS, as it is not very optimized
+>collides(Rectangle r1, Rectangle r2): check if r1 and r2 are colliding
+>rectContains(Rectangle r, Point p): check if r contains p
+>clamp(int a, int min, int max): clamp a between min and max
+>keyToString(int key): convert a keyCode into a string, use negative to get mouse buttons (e.g. -1=leftMouse)
+***
+
+***
+>INPUTADAPTER.JAVA<
+-Extension of KeyManager that allows custom code to be run when a key or mouse button is pressed
++REQUIREMENTS
++KeyManager.java
+>onKeyPressed(int key): runs when a key is pressed, use the built-in key variable to see which key was pressed
+>onMousePressed(int mb): runs when a mouse button is pressed, use the built-in mb variable to see which mouse button was pressed
+***
+
+***
+>KEYMANAGER.JAVA<
+-Tool to check if a button is being pressed
+>getKeyDown(int key): returns whether or not key is being pressed
+>getMouseDown(int mouseButton): returns whether or not mouseButton is being pressed
+>reset(): forcefully sets all keys to being not pressed
+>enable(): enables the KeyManager
+>disable(): disables the KeyManager
+***
+
+***
+>PLAYERCONTROLLER.JAVA<
+-Program that holds a player's position, controls, and other needed things for players
++REQUIREMENTS
++KeyManager.java
++BTools.java
++Position.java
+>update(long elapsedTime): updates the player if a KeyManager has been assigned
+>move(int x, int y): changes the player's position by x and y
+>move(Point p): changes the player's position using the x and y in p
+>goToPoint(int x, int y): sets the player's position to (x, y)
+>goToPoint(Point p): sets the player's position to p
+>goToPos(Position p): sets the player's position to a copy of p
+>clampPos(int minx, int maxx, int miny, int maxy): clamps the player's position within the specified dimensions
+>getX(): returns the player's x coordinate
+>getY(): returns the player's y coordinate
+>getPos(): returns the player's position
+***
+
+***
+>POSITION.JAVA<
+-holds 2 decimal numbers as a 2 dimensional position, accessed thru the variables position.x and position.y
+>copy(): makes a copy so as to not use the same position object for multiple objects
+***
+
+***
+>SMOKE.JAVA<
+-Simple self-sustaining smoke simulation
++REQUIREMENTS
++Smoke.java
+>setPos(Point p): sets the origin for the smoke
+>render(Graphics g): renders the smoke
+***
+
+***
+>TILEMANAGER.JAVA<
+-Program that generates a visual tilemap based off a text tilemap, DO NOT RUN ON LOWER-END HARDWARE, as it is un-optimized
+>render(Graphics g, Point origin, JPanel parent): render the tilemap on parent from origin
+>getTileID(int x, int y): returns the tile ID from (x, y)
+>getTileImage(int x, int y): returns the tile image from (x, y)
+>getOrientation(int x, int y): returns the orientation number from (x, y)
+>getTilePos(Point p): returns the tile from p, p being relative to the world, and not the tilemap
+>getTileSize(): returns tile size
+>getHeight(): returns height of the tilemap
+>getWidth(): returns width of the tilemap
+***
+
+***
+>ENTITY.JAVA< added 10/3/2022
+-Basic entity class meant to be extended from
+>update(long elapsedTime): write over and run every server tick
+>render(Graphics g): render with the data for basic shapes at the entity's position
+>render(Graphics g, JPanel panel): render with the data for images at the entity's position
+>render(Graphics g, int x, int y): render with the data for basic shapes at (x, y)
+>render(Graphics g, JPanel panel, int x, int y): render with the data for images at (x, y)
+***
