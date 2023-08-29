@@ -6,7 +6,7 @@ Collection of libraries you can use in your java projects
 In order to use any of these libraries in your project,
 download the .jar release, and put it in 'lib' (at least for vscode)
 
-Play my games!: blockmanblue.itch.io
+Play my games!: https://blockmanblue.itch.io
 
 > AnimImage - Use to draw a spritesheet as an animated image
 
