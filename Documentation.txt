@@ -1,8 +1,6 @@
 In order to use any of these libraries in your project,
 download the .jar release, and put it in 'lib' (at least for vscode)
 
- *** DOCUMENTATION IS WIP ***
-
 itch.io page: blockmanblue.itch.io/blockys-java-libraries
 github page: github.com/BlockManBlue/Blocky-s-Java-Libraries
 
@@ -62,3 +60,18 @@ github page: github.com/BlockManBlue/Blocky-s-Java-Libraries
 
  ***  BTools  ***
 
+> getDistance(Point p1, Point p2) or getDistance(Position p1, Position p2): get distance between p1 and p2
+> getDirection(Point p1, Point p2): Worse way to get direction, DO NOT USE
+> getDirectionTrig(Position p1, Position p2): Get vector direction with cool trigonomotry and stuff
+> angleToVector(double radians): Translate an angle in radians to a vector with magnitude of 1
+> getAngle(Position p1, Position p2): Get the angle in radians from p1 to p2
+> vectorToAngle(Position vector): Translate a vector to an angle in radians
+> randInt(int min, int max): Get a number between min(inclusive) and max(non-inclusive)
+> randDouble(double min, double max): Get a double between min and max. DO NOT USE EVERY TICK. THIS IS INEFFICIENT
+> collides(Rectangle r1, Rectangle r2): Returns whether or not r1 and r2 are colliding
+> rectContains(Rectangle r, Point p): I don't know why you would use this instead of r.contains(p)
+> clamp(int a, int min, int max) or with all doubles: Returns 'a' clamped between min and max
+> keyToString(int key): Takes a keycode and translates it to english
+> intersectsAt(Line line1, Line line2): checks where line1 and line2 intersect, or null if they don't intersect
+> openWebsite(String url): Opens a website in the user's default browser
+> flip(int i, int max) or with doubles: "-i + max"? I don't even know what this would be used for. Maybe it flips it around max? idek mannn
