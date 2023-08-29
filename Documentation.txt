@@ -1,7 +1,7 @@
 In order to use any of these libraries in your project,
 download the .jar release, and put it in 'lib' (at least for vscode)
 
-itch.io page: blockmanblue.itch.io/blockys-java-libraries
+Play my games!: blockmanblue.itch.io
 github page: github.com/BlockManBlue/Blocky-s-Java-Libraries
 
 > AnimImage - Use to draw a spritesheet as an animated image
