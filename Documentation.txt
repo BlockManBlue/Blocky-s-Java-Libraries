@@ -7,12 +7,57 @@ itch.io page: blockmanblue.itch.io/blockys-java-libraries
 github page: github.com/BlockManBlue/Blocky-s-Java-Libraries
 
 > AnimImage - Use to draw a spritesheet as an animated image
+
 > AnimKeyFrame - Part of the Animation system
 > Animation - A single animation
 > Animator - Can control one Position object with multiple animations
+
 > Audio - Can play audio
+
 > BTools - Collection of various tools (tool documentation at bottom of page)
+
 > CamShake - Can be used to make camera shake. You have to use the CamShake to render everything, or it'll be weird
+> Camera - Renders entities based off its position
+> Camera3D - Attempt at making a 3d engine. I wouldn't use this.
+
+> CircleBar - Use to make a pie-chart-like progress bar
+
+> Entity - An object in a game world. Handles its own rendering and logic. Meant to be extended off of 
+> Entity3D - Part of the 3d engine attempt
+
+> ErrorHandler - Prints error into a file, for debugging after compiling the project into a jar or exe
+
+> Event - Send event(int data) to run a piece of code you choose. Meant to be extended off of
+
+> InputAdapter - Simplified inputs, extend to run specific code on key/mouse button press
+
+> KeyManager - Keeps track of inputs
+
+> Light - A light entity used with the LightManager
+> LightManager - Simple lighting system
+
+> ParticleEmitter - Particle System
+
+> Player - PlayerController with a Camera
+> Player3D - Again, just the weird 3D engine attempt
+> PlayerController - Tracks its own inputs and moves itself accordingly
+
+> Position - Two doubles, x and y
+
+> ProgressBar - A horizontal bar to track a percentage
+
+> Sequence - A system that is useful in making cutscenes
+
+> Server - Runs a tick as fast as possible
+
+> Smoke - An early particle system that just handles smoke
+
+> TextBox - A better way to draw text
+> TextDialog - Creates scrolling text (hasn't been tested much, might not work)
+
+> TileManager - Creates a tilemap from a file and renders it with tilesets
+
+> VerticalBar - A vertical ProgressBar
 
 
  ***  BTools  ***
