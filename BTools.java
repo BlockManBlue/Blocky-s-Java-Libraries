@@ -1,6 +1,10 @@
 import java.util.*;
+
+import javafx.scene.shape.Line;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URI;
 public class BTools { // general class for general tools that i use a lot
 
     public static int getDistance(Point p1, Point p2){ // gets the distance between p1 and p2
@@ -10,6 +14,16 @@ public class BTools { // general class for general tools that i use a lot
         // a^2 + b^2 = c^2
         // c = sqrt(a^2 + b^2)
         int dist = (int)(Math.sqrt(Math.pow(distX, 2) + Math.pow(distY, 2)));
+
+        return dist;
+    }
+    public static double getDistance(Position p1, Position p2){ // gets the distance between p1 and p2
+        double distX = Math.abs((int)p2.x - (int)p1.x);
+        double distY = Math.abs((int)p2.y - (int)p1.y);
+
+        // a^2 + b^2 = c^2
+        // c = sqrt(a^2 + b^2)
+        double dist = Math.sqrt(Math.pow(distX, 2) + Math.pow(distY, 2));
 
         return dist;
     }
@@ -36,6 +50,26 @@ public class BTools { // general class for general tools that i use a lot
         result[0] = x;
         result[1] = y;
         return result;
+    }
+
+    public static Position getDirectionTrig(Position p1, Position p2){
+        double angle = Math.atan2((p2.y - p1.y), (p2.x - p1.x));
+        return angleToVector(angle);
+    }
+
+    public static Position angleToVector(double radians){
+        if(Double.isNaN(radians)) return new Position();
+        Position result = new Position(Math.cos(radians), Math.sin(radians));
+        return result;
+    }
+
+    public static double getAngle(Position p1, Position p2){
+        double angle = Math.atan2((p2.y - p1.y), (p2.x - p1.x));
+        return angle;
+    }
+
+    public static double vectorToAngle(Position vector){
+        return getAngle(new Position(), vector);
     }
 
     public static int randInt(int min, int max){
@@ -94,6 +128,11 @@ public class BTools { // general class for general tools that i use a lot
         a = Math.max(a, min);
         return a;
     }
+    public static double clamp(double a, double min, double max){
+        a = Math.min(a, max);
+        a = Math.max(a, min);
+        return a;
+    }
 
     public static String keyToString(int key){
         if(key < 0){
@@ -104,5 +143,65 @@ public class BTools { // general class for general tools that i use a lot
             return "Unknown Mouse Button";
         }
         return KeyEvent.getKeyText(key);
+    }
+
+    public static Position intersectsAt(Line line1, Line line2){
+        double slope1 = 0, yint1 = 0;
+        boolean line1Vertical = true;
+        if(line1.getStartX() != line1.getEndX()){ 
+            line1Vertical = false;
+            // get slope
+            slope1 = (line1.getEndY() - line1.getStartY()) / (line1.getEndX() - line1.getStartY());
+            // get y-intersection
+            yint1 = -line1.getStartY() - slope1 * line1.getStartX();
+        }
+        double slope2 = 0, yint2 = 0;
+        boolean line2Vertical = true;
+        if(line2.getStartX() != line2.getEndX()){ 
+            line2Vertical = false;
+            // get slope
+            slope2 = (line2.getEndY() - line2.getStartY()) / (line2.getEndX() - line2.getStartY());
+            // get y-intersection
+            yint2 = -line2.getStartY() - slope2 * line2.getStartX();
+        }
+
+        if(line1Vertical){
+            double x = line1.getStartX();
+            double y = slope2 * x + yint2;
+
+            if(x > Math.max(line2.getStartX(), line2.getEndX()) || x < Math.min(line2.getStartX(), line2.getEndX())) return null; // don't actually intersect
+
+            return new Position(x, y);
+        }
+        if(line2Vertical){
+            double x = line2.getStartX();
+            double y = slope1 * x + yint1;
+
+            if(x > Math.max(line1.getStartX(), line1.getEndX()) || x < Math.min(line1.getStartX(), line1.getEndX())) return null; // don't actually intersect
+
+            return new Position(x, y);
+        }
+        if(slope1 == slope2) return null; // parrallel lines
+
+        double x = (yint2 - yint1) / (slope1 + slope2);
+        double y = slope1 * x + yint1;
+        Position intersect = new Position(x, y);
+
+        if(x > Math.max(line1.getStartX(), line1.getEndX()) || x < Math.min(line1.getStartX(), line1.getEndX())) return null; // don't actually intersect
+
+        return intersect;
+    }
+
+    public static void openWebsite(String url){
+        try{
+            Desktop.getDesktop().browse(new URI(url));
+        }catch(Exception e){}
+    }
+
+    public static int flip(int i, int max){
+        return -i + max;
+    }
+    public static double flip(double i, double max){
+        return -i + max;
     }
 }

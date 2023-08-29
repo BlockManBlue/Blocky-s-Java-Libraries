@@ -1,19 +1,41 @@
-import java.io.File;
-import java.io.IOException;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-
-
+import java.io.*;
+import javax.sound.sampled.*;
 public class Audio {
 
-	public static void main(String FileName) throws Exception, IOException {
-		// TODO Auto-generated method stub
-		AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(FileName).getAbsoluteFile());
-		Clip clip = AudioSystem.getClip();
-		clip.open(audioIn);
-		clip.start();
+	public static boolean enabled = true;
+	public static FloatControl fc;
+	public static int volume = 75; // 0 - 100 (%)
+
+	public static Clip play(String FileName) {
+		if(volume == 0) return null;
+		volume = BTools.clamp(volume, 0, 100);
+		if(!enabled) return null;
+		try{
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(FileName).getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioIn);
+			fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+			fc.setValue((float)volume / 2 - 45f);
+			clip.start();
+			return clip;
+		}catch(Exception e){}
+		return null;
+	}
+
+	public static Clip play(String FileName, double vol) {
+		if(volume == 0) return null;
+		volume = BTools.clamp(volume, 0, 100);
+		if(!enabled) return null;
+		try{
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(FileName).getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioIn);
+			fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+			fc.setValue((float)(volume / 2 * vol) - 45f);
+			clip.start();
+			return clip;
+		}catch(Exception e){}
+		return null;
 	}
 
 }

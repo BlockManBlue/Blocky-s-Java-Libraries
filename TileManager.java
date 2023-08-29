@@ -2,14 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Scanner;
 import java.io.*;
+import java.awt.image.*;
 public class TileManager { // class to manage a tiling system
 
     private ImageIcon[][] tileImages; // [tileset][tile]
-    String[][] tiles; // [x][y] "<tileset> <tile>"
+    private String[][] tiles; // [x][y] "<tileset> <tile>"
     private int width, height;
     private int tileSize;
 
     private boolean doneLoading = false;
+
+    private BufferedImage asImg;
 
     public TileManager(int w, int h, String[] fileNames, String mapFile, int tileSize, String[] fileExtensions){
         width = w;
@@ -20,16 +23,16 @@ public class TileManager { // class to manage a tiling system
 
         // get tile images
         for(int i = 0; i < fileNames.length; i++){
-            tileImages[i][0] = new ImageIcon(fileNames[i] + "/0" + fileExtensions[i]);
-            tileImages[i][1] = new ImageIcon(fileNames[i] + "/1" + fileExtensions[i]);
-            tileImages[i][2] = new ImageIcon(fileNames[i] + "/2" + fileExtensions[i]);
-            tileImages[i][3] = new ImageIcon(fileNames[i] + "/3" + fileExtensions[i]);
-            tileImages[i][4] = new ImageIcon(fileNames[i] + "/4" + fileExtensions[i]);
-            tileImages[i][5] = new ImageIcon(fileNames[i] + "/5" + fileExtensions[i]);
-            tileImages[i][6] = new ImageIcon(fileNames[i] + "/6" + fileExtensions[i]);
-            tileImages[i][7] = new ImageIcon(fileNames[i] + "/7" + fileExtensions[i]);
-            tileImages[i][8] = new ImageIcon(fileNames[i] + "/8" + fileExtensions[i]);
-            tileImages[i][9] = new ImageIcon(fileNames[i] + "/9" + fileExtensions[i]);
+            tileImages[i][0] = new ImageIcon(fileNames[i] + "/00" + fileExtensions[i]);
+            tileImages[i][1] = new ImageIcon(fileNames[i] + "/01" + fileExtensions[i]);
+            tileImages[i][2] = new ImageIcon(fileNames[i] + "/02" + fileExtensions[i]);
+            tileImages[i][3] = new ImageIcon(fileNames[i] + "/03" + fileExtensions[i]);
+            tileImages[i][4] = new ImageIcon(fileNames[i] + "/04" + fileExtensions[i]);
+            tileImages[i][5] = new ImageIcon(fileNames[i] + "/05" + fileExtensions[i]);
+            tileImages[i][6] = new ImageIcon(fileNames[i] + "/06" + fileExtensions[i]);
+            tileImages[i][7] = new ImageIcon(fileNames[i] + "/07" + fileExtensions[i]);
+            tileImages[i][8] = new ImageIcon(fileNames[i] + "/08" + fileExtensions[i]);
+            tileImages[i][9] = new ImageIcon(fileNames[i] + "/09" + fileExtensions[i]);
             tileImages[i][10] = new ImageIcon(fileNames[i] + "/10" + fileExtensions[i]);
             tileImages[i][11] = new ImageIcon(fileNames[i] + "/11" + fileExtensions[i]);
             tileImages[i][12] = new ImageIcon(fileNames[i] + "/12" + fileExtensions[i]);
@@ -205,23 +208,30 @@ public class TileManager { // class to manage a tiling system
             }
         }
 
-        doneLoading = true;
-    }
-
-    public void render(Graphics g, Point origin, JPanel parent){
-        if(!doneLoading) return;
+        asImg = new BufferedImage(width * tileSize, height * tileSize, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = asImg.getGraphics();
         for(int y = 0; y < height; y++){
             for(int x = 0; x < width; x++){
                 try{
                     if(getTileImage(x, y) != null)
-                        getTileImage(x, y).paintIcon(parent, g, origin.x + (x * tileSize), origin.y + (y * tileSize));
+                        g.drawImage(getTileImage(x, y).getImage(), x * tileSize, y * tileSize, null);
                 }catch(Exception e){
                     e.printStackTrace();
                     System.exit(1);
                 }
-                
             }
         }
+
+        doneLoading = true;
+    }
+
+    public void render(Graphics g, JPanel panel, int x, int y){
+        if(!doneLoading) return;
+        g.drawImage(asImg, x, y, panel);
+    }
+
+    public ImageIcon asIcon(){
+        return new ImageIcon(asImg);
     }
 
     public int getTileID(int x, int y){
