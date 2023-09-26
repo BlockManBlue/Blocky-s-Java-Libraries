@@ -18,6 +18,12 @@ Play my games!: https://blockmanblue.itch.io
 
 > Audio - Can play audio
 
+> BSonBadFileException - Used to say when your BSon file sucks
+
+> BSonObject - Holds a BSon variable's data
+
+> BSonParser - Reads a .bson file
+
 > BTools - Collection of various tools (tool documentation at bottom of page)
 
 > CamShake - Can be used to make camera shake. You have to use the CamShake to render everything, or it'll be weird
@@ -70,6 +76,8 @@ Play my games!: https://blockmanblue.itch.io
 
 > VerticalBar - A vertical ProgressBar
 
+> WrongBSonTypeException - Says when you try to access the wrong information on a BSonObject, like trying to use getInt() on a String object
+
 
  ***  BTools  ***
 
@@ -102,4 +110,8 @@ Play my games!: https://blockmanblue.itch.io
 > openWebsite(String url): Opens a website in the user's default browser
 
 > flip(int i, int max) or with doubles: "-i + max"? I don't even know what this would be used for. Maybe it flips it around max? idek mannn
+
+> getLastSubString(String s, int n) : Gets the last n characters of a string and puts it in a new string
+
+> hasImage(ImageIcon i) : Checks if an ImageIcon actually has an Image attached to it 
 
