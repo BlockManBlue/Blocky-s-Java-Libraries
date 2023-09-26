@@ -247,7 +247,19 @@ public class TileManager { // class to manage a tiling system
         int orientation = reader.nextInt();
         reader.close();
         if(id == 0) return null;
-        return tileImages[id - 1][orientation];
+        ImageIcon img = tileImages[id - 1][orientation];
+        if(!BTools.hasImage(img)){
+            BufferedImage missingTexture = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_ARGB);
+            Graphics g = missingTexture.getGraphics();
+            g.setColor(Color.black);
+            g.fillRect(0, 0, tileSize, tileSize);
+            g.setColor(Color.magenta);
+            g.fillRect(0, 0, tileSize / 2, tileSize / 2);
+            g.fillRect(tileSize / 2, tileSize / 2, tileSize / 2, tileSize / 2);
+            return new ImageIcon(missingTexture);
+        }else{
+            return img;
+        }
     }
 
     public int getOrientation(int x, int y){

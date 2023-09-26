@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 public class AnimImage {
 
     ImageIcon spriteSheet;
@@ -24,6 +25,19 @@ public class AnimImage {
         delay = 1000 / fps;
         width = frameWidth;
         height = frameHeight;
+    }
+    
+    public static AnimImage parseBSon(String sheet, String bsonFile){
+        ArrayList<BSonObject> objects = BSonParser.readFile(bsonFile);
+        BSonObject obj = BSonParser.getObject("frameCount", objects);
+        int fCount = obj.getInt();
+        obj = BSonParser.getObject("fps", objects);
+        int fps = obj.getInt();
+        obj = BSonParser.getObject("frameWidth", objects);
+        int frameWidth = obj.getInt();
+        obj = BSonParser.getObject("frameHeight", objects);
+        int frameHeight = obj.getInt();
+        return new AnimImage(sheet, fCount, fps, frameWidth, frameHeight);
     }
 
     public void paint(JPanel panel, Graphics g, int x, int y){

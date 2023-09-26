@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 public class TextBox {
 
     String text;
@@ -15,46 +16,34 @@ public class TextBox {
         this.font = font;
     }
 
-    public void draw(Graphics g, int x, int y){
-        g.setFont(font);
-        if(alignment == LEFT){
-            g.drawString(text, x, y + font.getSize() / 2);
-        }
-        if(alignment == CENTER){
-            int textWidth = g.getFontMetrics().stringWidth(text);
-            g.drawString(text, x - textWidth / 2, y + font.getSize() / 2);
-        }
-        if(alignment == RIGHT){
-            int textWidth = g.getFontMetrics().stringWidth(text);
-            g.drawString(text, x - textWidth, y + font.getSize() / 2);
-        }
-
-        if(debug){
-            g.setColor(Color.red);
-            if(alignment == LEFT){
-                g.drawRect(x, y - font.getSize() / 2, g.getFontMetrics().stringWidth(text), font.getSize());
-            }
-            if(alignment == CENTER){
-                g.drawRect(x - g.getFontMetrics().stringWidth(text) / 2, y - font.getSize() / 2, g.getFontMetrics().stringWidth(text), font.getSize());
-            }
-            if(alignment == RIGHT){
-                g.drawRect(x - g.getFontMetrics().stringWidth(text), y - font.getSize() / 2, g.getFontMetrics().stringWidth(text), font.getSize());
-            }
-        }
-    }
-
     public void draw(Graphics g, int x, int y, int maxWidth){
         g.setFont(font);
         ArrayList<String> lines = new ArrayList<String>();
         String newString = "";
-        for(int i = 0; i < text.length(); i++){
+        for(int i = 0; i < text.length(); i++){ // check for newline characters
             newString += text.charAt(i);
-            if((g.getFontMetrics().stringWidth(newString) >= maxWidth && maxWidth != NOMAXWIDTH) || text.charAt(i) == '\n' || i == text.length() - 1){
-                // long enough, next line
+            if((text.charAt(i) == '\n' || i == text.length() - 1)){
                 lines.add(newString);
                 newString = "";
             }
         }
+        if(maxWidth != NOMAXWIDTH){
+            ArrayList<String> newLines = new ArrayList<String>();
+            for(int i = 0; i < lines.size(); i++){
+                Scanner reader = new Scanner(lines.get(i));
+                while(reader.hasNext()){
+                    newString += reader.next() + " ";
+                    if(g.getFontMetrics().stringWidth(newString) >= maxWidth){
+                        newLines.add(newString);
+                        newString = "";
+                    }
+                }
+                reader.close();
+            }
+            newLines.add(newString);
+            lines = newLines;
+        }
+        
 
         for(int i = 0; i < lines.size(); i++){
             if(alignment == LEFT){
@@ -84,9 +73,11 @@ public class TextBox {
         }
     }
 
+    public static void draw(String text, Graphics g, int x, int y){
+        draw(text, g, x, y, LEFT);
+    }
     public static void draw(String text, Graphics g, int x, int y, int alignment){
-        TextBox textBox = new TextBox(text, alignment, g.getFont());
-        textBox.draw(g, x, y);
+        draw(text, g, x, y, alignment, NOMAXWIDTH);
     }
     public static void draw(String text, Graphics g, int x, int y, int alignment, int maxWidth){
         TextBox textBox = new TextBox(text, alignment, g.getFont());

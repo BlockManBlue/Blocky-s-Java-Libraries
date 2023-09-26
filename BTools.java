@@ -5,6 +5,7 @@ import javafx.scene.shape.Line;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URI;
+import javax.swing.*;
 public class BTools { // general class for general tools that i use a lot
 
     public static int getDistance(Point p1, Point p2){ // gets the distance between p1 and p2
@@ -203,5 +204,17 @@ public class BTools { // general class for general tools that i use a lot
     }
     public static double flip(double i, double max){
         return -i + max;
+    }
+
+    public static void resizeImgIcon(ImageIcon img, int width, int height){
+        img.setImage(img.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+    }
+
+    public static String getLastSubString(String s, int n){ // gets the last n characters in a string
+        return s.substring(s.length() - n, s.length());
+    }
+
+    public static boolean hasImage(ImageIcon i){
+        return i.getImageLoadStatus() != MediaTracker.ERRORED;
     }
 }
